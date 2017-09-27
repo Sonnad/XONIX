@@ -3,6 +3,8 @@ package game.xonix.view;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 
+import java.util.LinkedList;
+
 import game.xonix.Xonix;
 import game.xonix.model.Ground;
 import game.xonix.model.Wall;
@@ -11,17 +13,17 @@ import game.xonix.model.Wall;
  */
 
 public class DrawWall {
-    private Array<Wall> walls;
+    private LinkedList<Wall> walls;
 
     public DrawWall() {
-        walls = new Array<Wall>();
+        walls = new LinkedList<Wall>();
         for (int i = 0; i < Xonix.WIDTH; i+=Xonix.SPRITESIZE) {
             for (int j = 0; j < Xonix.HEIGHT; j+=Xonix.SPRITESIZE) {
                 if (i < Xonix.SPRITESIZE*3) {
                     walls.add(new Wall(i, j));
                     continue;
                 }
-                if (j < Xonix.SPRITESIZE*3) {
+                if (j < Xonix.SPRITESIZE*2) {
                     walls.add(new Wall(i, j));
                     continue;
                 }
@@ -32,7 +34,7 @@ public class DrawWall {
                     continue;
                 }
 
-                if (j >= Xonix.HEIGHT-Xonix.SPRITESIZE*3) {
+                if (j >= Xonix.HEIGHT-Xonix.SPRITESIZE*2) {
                     walls.add(new Wall(i, j));
                     continue;
                 }
