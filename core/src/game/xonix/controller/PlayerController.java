@@ -39,12 +39,15 @@ public class PlayerController {
 
     }
 
-    public void stay() {
+    public void correctXPosition() {
         currentPositionX = (player.getPosition().x % 24)-12;
-        currentPositionY = (int)(player.getPosition().y % 24);
         if (currentPositionX != 0) {
             player.getPosition().x = (player.getPosition().x - currentPositionX);
         }
+    }
+
+    public void correctYPosition() {
+        currentPositionY = (int)(player.getPosition().y % 24);
         if (currentPositionY != 0) {
             if (currentPositionY > 12)
                 player.getPosition().y = (int)player.getPosition().y + 24 - currentPositionY;
@@ -53,11 +56,16 @@ public class PlayerController {
         }
     }
 
+    public void stay() {
+        correctXPosition();
+        correctYPosition();
+    }
+
     public void update(float dt) {
         player.getPlayerAnimation().update(dt);
         if (player.getPosition().x < 0) player.getPosition().x = 0;
         if (player.getPosition().y < 0) player.getPosition().y = 0;
-        if (player.getPosition().x > Xonix.WIDTH-51) player.getPosition().x = Xonix.WIDTH-51;
+        if (player.getPosition().x > Xonix.WIDTH-51-11) player.getPosition().x = Xonix.WIDTH-51-11;
         if (player.getPosition().y > Xonix.HEIGHT-24) player.getPosition().y = Xonix.HEIGHT-24;
 
     }

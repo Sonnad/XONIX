@@ -17,6 +17,8 @@ public class PlayController extends Controller {
     private Background background;
     private DrawWall drawWall;
     private PlayerController player;
+    private boolean leftIsPressed = false;
+    private boolean rightIsPressed = false;
 
     public PlayController(GameControllerManager gsm) {
         super(gsm);
@@ -29,24 +31,29 @@ public class PlayController extends Controller {
     protected void handleInput() {
         if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
             player.runUp();
+            player.correctXPosition();
             return;
         }
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             player.runDown();
+            player.correctXPosition();
             return;
         }
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             player.runLeft();
+            player.correctYPosition();
             return;
         }
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             player.runRight();
+            player.correctYPosition();
             return;
         }
         player.stay();
     }
 
-    @Override
+
+        @Override
     public void update(float dt) {
         handleInput();
         player.update(dt);
