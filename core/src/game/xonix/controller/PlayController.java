@@ -2,10 +2,8 @@ package game.xonix.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import game.xonix.model.Player;
 import game.xonix.view.Background;
 import game.xonix.view.DrawWall;
 
@@ -17,8 +15,6 @@ public class PlayController extends Controller {
     private Background background;
     private DrawWall drawWall;
     private PlayerController player;
-    private boolean leftIsPressed = false;
-    private boolean rightIsPressed = false;
 
     public PlayController(GameControllerManager gsm) {
         super(gsm);

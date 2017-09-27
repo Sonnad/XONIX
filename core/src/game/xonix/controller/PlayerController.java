@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import game.xonix.Xonix;
-import game.xonix.model.Player;
+import game.xonix.model.PlayerSingleton;
 
 /**
  * Created by Sonad on 27.09.17.
@@ -12,7 +12,7 @@ import game.xonix.model.Player;
 
 public class PlayerController {
 
-    private Player player = new Player(12,0);
+    private PlayerSingleton player = PlayerSingleton.getInstance();
     private int currentPositionY;
     private float currentPositionX;
 
@@ -74,7 +74,7 @@ public class PlayerController {
         sb.draw(player.getPlayer(), player.getPosition().x, player.getPosition().y);
     }
 
-    public Player getPlayer() {
+    public PlayerSingleton getPlayer() {
         return player;
     }
 }
