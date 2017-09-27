@@ -15,12 +15,15 @@ public class PlayController extends Controller {
     private Background background;
     private DrawWall drawWall;
     private PlayerController player;
+    private FieldCollisionController collisionController;
+    private boolean backgroundDrawed = false;
 
     public PlayController(GameControllerManager gsm) {
         super(gsm);
         drawWall = new DrawWall();
         background = new Background();
         player = new PlayerController();
+        collisionController = new FieldCollisionController(drawWall.getWalls(), background.getBackground());
     }
 
     @Override
@@ -49,16 +52,17 @@ public class PlayController extends Controller {
     }
 
 
-        @Override
+    @Override
     public void update(float dt) {
         handleInput();
         player.update(dt);
+        collisionController.update();
     }
 
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
-        background.render(sb);
+        if(!backgroundDrawed) background.render(sb);
         drawWall.render(sb);
         player.draw(sb);
         sb.end();

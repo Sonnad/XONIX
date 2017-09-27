@@ -27,4 +27,7 @@ public class Ground {
         return ground;
     }
 
+    public Rectangle getBoundsGround() {
+        return boundsGround;
+    }
 }

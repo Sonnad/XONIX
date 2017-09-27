@@ -16,8 +16,6 @@ public class PlayerController {
     private int currentPositionY;
     private float currentPositionX;
 
-    public PlayerController() {
-    }
 
     public void runRight() {
         player.getPosition().x += player.getMovement() * Gdx.graphics.getDeltaTime();
@@ -49,7 +47,7 @@ public class PlayerController {
     public void correctYPosition() {
         currentPositionY = (int)(player.getPosition().y % 24);
         if (currentPositionY != 0) {
-            if (currentPositionY > 12)
+            if (currentPositionY >= 12)
                 player.getPosition().y = (int)player.getPosition().y + 24 - currentPositionY;
             else
                 player.getPosition().y = (int)player.getPosition().y - currentPositionY;
@@ -63,10 +61,11 @@ public class PlayerController {
 
     public void update(float dt) {
         player.getPlayerAnimation().update(dt);
-        if (player.getPosition().x < 0) player.getPosition().x = 0;
+        if (player.getPosition().x < 12) player.getPosition().x = 12;
         if (player.getPosition().y < 0) player.getPosition().y = 0;
         if (player.getPosition().x > Xonix.WIDTH-51-11) player.getPosition().x = Xonix.WIDTH-51-11;
         if (player.getPosition().y > Xonix.HEIGHT-24) player.getPosition().y = Xonix.HEIGHT-24;
+        player.getPlayerGround().setPosition(player.getPosition().x+24, player.getPosition().y+12);
 
     }
 

@@ -13,7 +13,7 @@ public class Wall {
     private Vector3 position;
     private Rectangle boundsWall;
 
-    public Wall(int x, int y) {
+    public Wall(float x, float y) {
         position = new Vector3(x, y, 0);
         wall = new Texture("crate_2.png");
         boundsWall = new Rectangle(position.x, position.y, wall.getWidth(), wall.getHeight());

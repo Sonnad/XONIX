@@ -19,7 +19,7 @@ public class PlayerSingleton {
 
     private PlayerSingleton(int x, int y) {
         position = new Vector3(x, y, 0);
-//        playerGround = new Rectangle(position.x, position.y, player.getWidth(), player.getHeight());
+        playerGround = new Rectangle(36, 12, 1 , 1);
         playerAnimation = new Animation(0.45f);
     }
 
@@ -49,4 +49,7 @@ public class PlayerSingleton {
         return playerAnimation;
     }
 
+    public Rectangle getPlayerGround() {
+        return playerGround;
+    }
 }

@@ -45,12 +45,14 @@ public class DrawWall {
         }
     }
 
-
-
     public void render(SpriteBatch sb) {
         for (Wall wall : walls) {
             sb.draw(wall.getWall(), wall.getPosition().x, wall.getPosition().y);
         }
 
+    }
+
+    public LinkedList<Wall> getWalls() {
+        return walls;
     }
 }
