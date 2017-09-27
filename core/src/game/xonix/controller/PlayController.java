@@ -16,13 +16,13 @@ import game.xonix.view.DrawWall;
 public class PlayController extends Controller {
     private Background background;
     private DrawWall drawWall;
-    private Player player;
+    private PlayerController player;
 
     public PlayController(GameControllerManager gsm) {
         super(gsm);
         drawWall = new DrawWall();
         background = new Background();
-        player = new Player(12,0);
+        player = new PlayerController();
     }
 
     @Override
@@ -57,7 +57,7 @@ public class PlayController extends Controller {
         sb.begin();
         background.render(sb);
         drawWall.render(sb);
-        sb.draw(player.getPlayer(), player.getPosition().x, player.getPosition().y);
+        player.draw(sb);
         sb.end();
     }
 

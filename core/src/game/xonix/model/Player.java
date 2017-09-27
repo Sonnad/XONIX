@@ -18,10 +18,8 @@ public class Player {
 
     private Vector3 position;
     private Rectangle playerGround;
-    public static final int MOVEMENT = 250;
+    public final int MOVEMENT = 250;
     private Animation playerAnimation;
-    private int currentPositionY;
-    private float currentPositionX;
 
     public Player(int x, int y) {
         position = new Vector3(x, y, 0);
@@ -38,48 +36,12 @@ public class Player {
         return playerAnimation.getFrame();
     }
 
-    public void runRight() {
-            position.x += MOVEMENT * Gdx.graphics.getDeltaTime();
-
+    public int getMovement() {
+        return MOVEMENT;
     }
 
-    public void runLeft() {
-            position.x -= MOVEMENT * Gdx.graphics.getDeltaTime();
-
+    public Animation getPlayerAnimation() {
+        return playerAnimation;
     }
-
-    public void runUp() {
-        position.y += MOVEMENT * Gdx.graphics.getDeltaTime();
-
-    }
-
-    public void runDown() {
-        position.y -= MOVEMENT * Gdx.graphics.getDeltaTime();
-
-    }
-
-    public void stay() {
-        currentPositionX = (position.x % 24)-12;
-        currentPositionY = (int)(position.y % 24);
-        if (currentPositionX != 0) {
-            position.x = (position.x - currentPositionX);
-        }
-        if (currentPositionY != 0) {
-            if (currentPositionY > 12)
-                position.y = (int)position.y + 24 - currentPositionY;
-             else
-                 position.y = (int)position.y - currentPositionY;
-        }
-    }
-
-    public void update(float dt) {
-        playerAnimation.update(dt);
-        if (position.x < 0) position.x = 0;
-        if (position.y < 0) position.y = 0;
-        if (position.x > Xonix.WIDTH-51) position.x = Xonix.WIDTH-51;
-        if (position.y > Xonix.HEIGHT-24) position.y = Xonix.HEIGHT-24;
-
-    }
-
 
 }
