@@ -1,8 +1,10 @@
 package game.xonix.model;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
 
 import game.xonix.view.Animation;
 
@@ -20,7 +22,12 @@ public class PlayerSingleton {
     private PlayerSingleton(int x, int y) {
         position = new Vector3(x, y, 0);
         playerGround = new Rectangle(36, 12, 1 , 1);
-        playerAnimation = new Animation(0.45f);
+        Array<TextureRegion> frames = new Array<TextureRegion>();
+        frames.add(new TextureRegion(new Texture("anim2.png")));
+        frames.add(new TextureRegion(new Texture("anim3.png")));
+        frames.add(new TextureRegion(new Texture("anim4.png")));
+        frames.add(new TextureRegion(new Texture("anim3.png")));
+        playerAnimation = new Animation(0.45f, frames, 4);
     }
 
     private static PlayerSingleton instance;

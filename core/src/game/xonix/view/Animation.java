@@ -12,15 +12,12 @@ public class Animation {
     private Array<TextureRegion> frames;
     private float maxFrameTime;
     private float currentFrameTime;
-    private int frameCount = 4;
+    private int frameCount;
     private int frame;
 
-    public Animation(float cycleTime){
-        frames = new Array<TextureRegion>();
-        frames.add(new TextureRegion(new Texture("anim2.png")));
-        frames.add(new TextureRegion(new Texture("anim3.png")));
-        frames.add(new TextureRegion(new Texture("anim4.png")));
-        frames.add(new TextureRegion(new Texture("anim3.png")));
+    public Animation(float cycleTime, Array<TextureRegion> frames, int frameCount){
+        this.frames = frames;
+        this.frameCount = frameCount;
         maxFrameTime = cycleTime/frameCount; //Время показа 1 кадра анимации = время на весь круг анимации/ кол-во кадров
         frame = 0;
     }
