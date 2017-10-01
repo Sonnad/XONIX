@@ -10,7 +10,7 @@ import game.xonix.model.PlayerSingleton;
  * Created by Sonad on 27.09.17.
  */
 
-public class PlayerController {
+public class PlayerDefaultController {
 
     private PlayerSingleton player = PlayerSingleton.getInstance();
     private int currentPositionY;

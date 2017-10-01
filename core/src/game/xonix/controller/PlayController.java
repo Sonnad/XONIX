@@ -14,7 +14,7 @@ import game.xonix.view.DrawWall;
 public class PlayController extends Controller {
     private Background background;
     private DrawWall drawWall;
-    private PlayerController player;
+    private PlayerDefaultController player;
     private FieldCollisionController collisionController;
     private boolean backgroundDrawed = false;
 
@@ -22,7 +22,7 @@ public class PlayController extends Controller {
         super(gsm);
         drawWall = new DrawWall();
         background = new Background();
-        player = new PlayerController();
+        player = new PlayerDefaultController();
         collisionController = new FieldCollisionController(drawWall.getWalls(), background.getBackground());
     }
 
