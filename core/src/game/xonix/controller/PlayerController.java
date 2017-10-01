@@ -16,4 +16,14 @@ public interface PlayerController {
 
     public void draw(SpriteBatch sb);
 
+    public void runUp();
+
+    public void runDown();
+
+    public void runLeft();
+
+    public void runRight();
+
+    public void keyIsNotPressed();
+
 }

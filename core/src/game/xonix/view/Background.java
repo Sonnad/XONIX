@@ -20,9 +20,31 @@ public class Background {
         background = new LinkedList<Ground>();
         for (int i = 0; i < Xonix.WIDTH; i+=Xonix.SPRITESIZE) {
             for (int j = 0; j < Xonix.HEIGHT; j+=Xonix.SPRITESIZE) {
-                background.add(new Ground(i, j));
+                background.add(new Ground(i, j, isGameField(i, j)));
             }
         }
+    }
+
+    private boolean isGameField(int i, int j) {
+
+        //При отрисовки игрового поля блоки, находящиеся под стартовыми стенами не должны иметь прямоугольника для коллизии
+        if (i < Xonix.SPRITESIZE*3) {
+            return false;
+        }
+        if (j < Xonix.SPRITESIZE*2) {
+            return false;
+        }
+
+        if (i >= Xonix.WIDTH-Xonix.SPRITESIZE*3)
+        {
+            return false;
+        }
+
+        if (j >= Xonix.HEIGHT-Xonix.SPRITESIZE*2) {
+            return false;
+        }
+
+        return true;
     }
 
     public void render(SpriteBatch sb) {

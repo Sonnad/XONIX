@@ -21,7 +21,7 @@ public class Animation {
         frames.add(new TextureRegion(new Texture("anim3.png")));
         frames.add(new TextureRegion(new Texture("anim4.png")));
         frames.add(new TextureRegion(new Texture("anim3.png")));
-        maxFrameTime = cycleTime/frameCount;
+        maxFrameTime = cycleTime/frameCount; //Время показа 1 кадра анимации = время на весь круг анимации/ кол-во кадров
         frame = 0;
     }
     public void update(float dt){

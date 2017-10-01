@@ -13,10 +13,10 @@ public class Ground {
     private Vector3 position;
     private Rectangle boundsGround;
 
-    public Ground(int x, int y) {
+    public Ground(int x, int y, boolean isGameField) {
         position = new Vector3(x, y, 0);
         ground = new Texture("ground_2.png");
-        boundsGround = new Rectangle(position.x, position.y, ground.getWidth(), ground.getHeight());
+        if(isGameField) boundsGround = new Rectangle(position.x, position.y, ground.getWidth(), ground.getHeight());
     }
 
     public Vector3 getPosition() {

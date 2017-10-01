@@ -1,4 +1,4 @@
-package game.xonix.controller;
+package game.xonix.controller.game;
 
 
 import java.util.Iterator;
@@ -14,7 +14,7 @@ import game.xonix.model.Wall;
 
 public class FieldCollisionController {
 
-    private PlayerSingleton player = PlayerSingleton.getInstance();
+    PlayerSingleton player = PlayerSingleton.getInstance();
     private LinkedList<Wall> walls;
     private LinkedList<Ground> ground;
 
@@ -23,14 +23,20 @@ public class FieldCollisionController {
         this.ground = ground;
     }
 
-    public void update() {
+    public boolean isFieldCollision() {
         Iterator<Ground> iter = ground.iterator();
         while (iter.hasNext()) {
             Ground ground = iter.next();
+
+            if(ground.getBoundsGround() == null) continue;
+
             if(ground.getBoundsGround().overlaps(player.getPlayerGround())) {
                 walls.add(new Wall(ground.getPosition().x, ground.getPosition().y));
+                return true;
             }
         }
+        return false;
     }
+
 
 }

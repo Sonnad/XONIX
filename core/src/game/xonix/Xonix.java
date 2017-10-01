@@ -3,11 +3,10 @@ package game.xonix;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import game.xonix.controller.GameControllerManager;
-import game.xonix.controller.MenuController;
+import game.xonix.controller.game.MenuController;
 
 public class Xonix extends ApplicationAdapter {
 	public static final int WIDTH = 1200;

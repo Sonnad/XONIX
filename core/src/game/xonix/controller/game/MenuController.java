@@ -1,4 +1,4 @@
-package game.xonix.controller;
+package game.xonix.controller.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
@@ -11,6 +11,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import game.xonix.Xonix;
+import game.xonix.controller.Controller;
+import game.xonix.controller.GameControllerManager;
 import game.xonix.model.PlayButton;
 
 /**

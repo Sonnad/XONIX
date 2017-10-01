@@ -1,9 +1,14 @@
-package game.xonix.controller;
+package game.xonix.controller.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import game.xonix.controller.Controller;
+import game.xonix.controller.Direction;
+import game.xonix.controller.GameControllerManager;
+import game.xonix.controller.PlayerController;
+import game.xonix.controller.player.*;
 import game.xonix.view.Background;
 import game.xonix.view.DrawWall;
 
@@ -14,9 +19,11 @@ import game.xonix.view.DrawWall;
 public class PlayController extends Controller {
     private Background background;
     private DrawWall drawWall;
-    private PlayerDefaultController player;
+    private PlayerController player;
     private FieldCollisionController collisionController;
     private boolean backgroundDrawed = false;
+    private Direction lastKeyPressed;
+    private boolean wasCollision = false;
 
     public PlayController(GameControllerManager gsm) {
         super(gsm);
@@ -30,25 +37,25 @@ public class PlayController extends Controller {
     protected void handleInput() {
         if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
             player.runUp();
-            player.correctXPosition();
+            lastKeyPressed = Direction.UP;
             return;
         }
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             player.runDown();
-            player.correctXPosition();
+            lastKeyPressed = Direction.DOWN;
             return;
         }
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             player.runLeft();
-            player.correctYPosition();
+            lastKeyPressed = Direction.LEFT;
             return;
         }
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             player.runRight();
-            player.correctYPosition();
+            lastKeyPressed = Direction.RIGHT;
             return;
         }
-        player.stay();
+        player.keyIsNotPressed();
     }
 
 
@@ -56,7 +63,14 @@ public class PlayController extends Controller {
     public void update(float dt) {
         handleInput();
         player.update(dt);
-        collisionController.update();
+        if(collisionController.isFieldCollision()) {
+            player = new PlayerCollisionController(lastKeyPressed);
+            wasCollision = true;
+        }
+        else
+            if(wasCollision) player = new PlayerDefaultController();
+
+
     }
 
     @Override
