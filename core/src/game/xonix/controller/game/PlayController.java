@@ -9,6 +9,7 @@ import game.xonix.controller.Direction;
 import game.xonix.controller.GameControllerManager;
 import game.xonix.controller.PlayerController;
 import game.xonix.controller.player.*;
+import game.xonix.model.Enemy;
 import game.xonix.view.Background;
 import game.xonix.view.DrawWall;
 
@@ -24,9 +25,11 @@ public class PlayController extends Controller {
     private boolean backgroundDrawed = false;
     private Direction lastKeyPressed;
     private boolean wasCollision = false;
+    private Enemy enemy;
 
     public PlayController(GameControllerManager gsm) {
         super(gsm);
+        enemy = new Enemy(700, 500);
         drawWall = new DrawWall();
         background = new Background();
         player = new PlayerDefaultController();
@@ -62,13 +65,18 @@ public class PlayController extends Controller {
     @Override
     public void update(float dt) {
         handleInput();
+        enemy.update(dt);
         player.update(dt);
         if(collisionController.isFieldCollision()) {
-            player = new PlayerCollisionController(lastKeyPressed);
+            if (!wasCollision)
+                player = new PlayerCollisionController(lastKeyPressed);
             wasCollision = true;
         }
         else
-            if(wasCollision) player = new PlayerDefaultController();
+            if(wasCollision) {
+                player = new PlayerDefaultController();
+                wasCollision = false;
+            }
 
 
     }
@@ -79,6 +87,7 @@ public class PlayController extends Controller {
         if(!backgroundDrawed) background.render(sb);
         drawWall.render(sb);
         player.draw(sb);
+        enemy.draw(sb);
         sb.end();
     }
 
