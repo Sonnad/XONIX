@@ -10,7 +10,7 @@ import game.xonix.model.PlayerSingleton;
  * Created by Sonad on 27.09.17.
  */
 
-public class PlayerDefaultController {
+public class PlayerDefaultController implements PlayerController {
 
     private PlayerSingleton player = PlayerSingleton.getInstance();
     private int currentPositionY;
@@ -59,6 +59,7 @@ public class PlayerDefaultController {
         correctYPosition();
     }
 
+    @Override
     public void update(float dt) {
         player.getPlayerAnimation().update(dt);
         if (player.getPosition().x < 12) player.getPosition().x = 12;
@@ -69,11 +70,14 @@ public class PlayerDefaultController {
 
     }
 
+    @Override
     public void draw(SpriteBatch sb) {
         sb.draw(player.getPlayer(), player.getPosition().x, player.getPosition().y);
     }
 
+    @Override
     public PlayerSingleton getPlayer() {
         return player;
     }
+
 }
