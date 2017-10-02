@@ -48,6 +48,12 @@ public class PlayerSingleton {
         return playerAnimation.getFrame();
     }
 
+    public void kill() {
+        position.x = 12;
+        position.y = 0;
+        playerGround.setPosition(position.x, position.y);
+    }
+
     public int getMovement() {
         return MOVEMENT;
     }

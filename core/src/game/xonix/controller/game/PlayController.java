@@ -31,8 +31,8 @@ public class PlayController extends Controller {
     public PlayController(GameControllerManager gsm) {
         super(gsm);
         drawWall = new DrawWall();
-        enemyController = new EnemyController(drawWall.getWalls(), 4);
         background = new Background();
+        enemyController = new EnemyController(background.getBackground() , drawWall.getWalls(), 4);
         player = new PlayerDefaultController();
         collisionController = new FieldCollisionController(drawWall.getWalls(), background.getBackground());
     }
@@ -67,7 +67,7 @@ public class PlayController extends Controller {
     public void update(float dt) {
         handleInput();
         player.update(dt);
-        enemyController.update(dt);
+        enemyController.update(dt, collisionController.getNewWall());
         if(collisionController.isFieldCollision()) {
             if (!wasCollision)
                 player = new PlayerCollisionController(lastKeyPressed);
@@ -75,7 +75,11 @@ public class PlayController extends Controller {
         }
         else
             if(wasCollision) {
+                if (!enemyController.isPlayerCollision())
+                    collisionController.clearGround();
+                enemyController.setPlayerCollision(false);
                 player = new PlayerDefaultController();
+                collisionController.clear();
                 wasCollision = false;
             }
 

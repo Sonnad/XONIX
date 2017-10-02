@@ -31,6 +31,13 @@ public class Wall {
         return boundsWall;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if ( ((Wall)o).position.x == this.position.x  && ((Wall)o).position.y == this.position.y  )
+            return true;
+        return false;
+    }
+
     public void dispose() {
         wall.dispose();
     }

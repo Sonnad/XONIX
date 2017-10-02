@@ -31,6 +31,14 @@ public class Ground {
         return boundsGround;
     }
 
+    public void deleteBoundsGround() {
+        boundsGround = null;
+    }
+
+    public void restoreBounds(int x, int y) {
+        boundsGround = new Rectangle(x, y, ground.getWidth(), ground.getHeight());
+    }
+
     public void dispose() {
         ground.dispose();
     }
