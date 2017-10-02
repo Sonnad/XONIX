@@ -8,6 +8,7 @@ import game.xonix.controller.Controller;
 import game.xonix.controller.Direction;
 import game.xonix.controller.GameControllerManager;
 import game.xonix.controller.PlayerController;
+import game.xonix.controller.enemy.EnemyController;
 import game.xonix.controller.player.*;
 import game.xonix.model.Enemy;
 import game.xonix.view.Background;
@@ -25,12 +26,12 @@ public class PlayController extends Controller {
     private boolean backgroundDrawed = false;
     private Direction lastKeyPressed;
     private boolean wasCollision = false;
-    private Enemy enemy;
+    private EnemyController enemyController;
 
     public PlayController(GameControllerManager gsm) {
         super(gsm);
-        enemy = new Enemy(700, 500);
         drawWall = new DrawWall();
+        enemyController = new EnemyController(drawWall.getWalls(), 4);
         background = new Background();
         player = new PlayerDefaultController();
         collisionController = new FieldCollisionController(drawWall.getWalls(), background.getBackground());
@@ -65,8 +66,8 @@ public class PlayController extends Controller {
     @Override
     public void update(float dt) {
         handleInput();
-        enemy.update(dt);
         player.update(dt);
+        enemyController.update(dt);
         if(collisionController.isFieldCollision()) {
             if (!wasCollision)
                 player = new PlayerCollisionController(lastKeyPressed);
@@ -87,12 +88,16 @@ public class PlayController extends Controller {
         if(!backgroundDrawed) background.render(sb);
         drawWall.render(sb);
         player.draw(sb);
-        enemy.draw(sb);
+        for (Enemy enemy : enemyController.getEnemyList()) {
+            enemy.draw(sb);
+        }
         sb.end();
     }
 
     @Override
     public void dispose() {
+        background.dispose();
+        drawWall.dispose();
     }
 
 }

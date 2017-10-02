@@ -52,22 +52,26 @@ public class PlayerCollisionController implements PlayerController {
 
     @Override
     public void runUp() {
-
+        if(lastKeyPressed != Direction.DOWN)
+            lastKeyPressed = Direction.UP;
     }
 
     @Override
     public void runDown() {
-
+        if(lastKeyPressed != Direction.UP)
+            lastKeyPressed = Direction.DOWN;
     }
 
     @Override
     public void runLeft() {
-
+        if(lastKeyPressed != Direction.RIGHT)
+            lastKeyPressed = Direction.LEFT;
     }
 
     @Override
     public void runRight() {
-
+        if(lastKeyPressed != Direction.LEFT)
+            lastKeyPressed = Direction.RIGHT;
     }
 
 
