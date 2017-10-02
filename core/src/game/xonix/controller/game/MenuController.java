@@ -73,7 +73,9 @@ public class MenuController extends Controller {
 
     @Override
     public void dispose() {
+
         background.dispose();
+        playButton.dispose();
     }
 
 }

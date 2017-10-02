@@ -31,4 +31,10 @@ public class PlayButton {
     public ImageButton getPlayButton() {
         return playButton;
     }
+
+    public void dispose() {
+        atlasButton.dispose();
+        buttonsSkin.dispose();
+    }
+
 }

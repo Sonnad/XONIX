@@ -55,4 +55,11 @@ public class DrawWall {
     public LinkedList<Wall> getWalls() {
         return walls;
     }
+
+    public void dispose() {
+        for (Wall wall : walls) {
+            wall.dispose();
+        }
+    }
+
 }

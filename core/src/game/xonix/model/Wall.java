@@ -26,4 +26,13 @@ public class Wall {
     public Texture getWall() {
         return wall;
     }
+
+    public Rectangle getBoundsWall() {
+        return boundsWall;
+    }
+
+    public void dispose() {
+        wall.dispose();
+    }
+
 }

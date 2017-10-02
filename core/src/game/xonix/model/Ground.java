@@ -30,4 +30,9 @@ public class Ground {
     public Rectangle getBoundsGround() {
         return boundsGround;
     }
+
+    public void dispose() {
+        ground.dispose();
+    }
+
 }

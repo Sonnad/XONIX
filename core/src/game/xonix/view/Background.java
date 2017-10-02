@@ -56,4 +56,9 @@ public class Background {
     public LinkedList<Ground> getBackground() {
         return background;
     }
+    public void dispose() {
+        for (Ground ground : background) {
+            ground.dispose();
+        }
+    }
 }
