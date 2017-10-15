@@ -35,8 +35,8 @@ public class Ground {
         boundsGround = null;
     }
 
-    public void restoreBounds(int x, int y) {
-        boundsGround = new Rectangle(x, y, ground.getWidth(), ground.getHeight());
+    public void restoreBounds() {
+        boundsGround = new Rectangle(position.x, position.y, ground.getWidth(), ground.getHeight());
     }
 
     public void dispose() {

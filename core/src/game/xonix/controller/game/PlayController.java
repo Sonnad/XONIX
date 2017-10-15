@@ -27,14 +27,16 @@ public class PlayController extends Controller {
     private Direction lastKeyPressed;
     private boolean wasCollision = false;
     private EnemyController enemyController;
+    private FillController fillController;
 
     public PlayController(GameControllerManager gsm) {
         super(gsm);
         drawWall = new DrawWall();
         background = new Background();
-        enemyController = new EnemyController(background.getBackground() , drawWall.getWalls(), 4);
+        enemyController = new EnemyController(background.getBackground() , drawWall.getWalls(), 10);
         player = new PlayerDefaultController();
         collisionController = new FieldCollisionController(drawWall.getWalls(), background.getBackground());
+        fillController = new FillController(drawWall.getWalls(), background, enemyController.getEnemyList());
     }
 
     @Override
@@ -75,15 +77,18 @@ public class PlayController extends Controller {
         }
         else
             if(wasCollision) {
-                if (!enemyController.isPlayerCollision())
+                if (!enemyController.isPlayerCollision()) {
                     collisionController.clearGround();
+                    long timer = -System.currentTimeMillis();
+                    fillController.tryToFill();
+                    timer += System.currentTimeMillis();
+                    System.out.println("C.m(fillController.tryToFill()) " + timer);
+                }
                 enemyController.setPlayerCollision(false);
                 player = new PlayerDefaultController();
                 collisionController.clear();
                 wasCollision = false;
             }
-
-
     }
 
     @Override

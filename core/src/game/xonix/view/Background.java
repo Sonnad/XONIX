@@ -1,6 +1,7 @@
 package game.xonix.view;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
 import java.util.LinkedList;
@@ -56,9 +57,18 @@ public class Background {
     public LinkedList<Ground> getBackground() {
         return background;
     }
+
+    public Ground getGround(Rectangle rectangle) {
+        for (Ground ground : background) {
+            if (ground.getBoundsGround().overlaps(rectangle)) return ground;
+        }
+        return null;
+    }
+
     public void dispose() {
         for (Ground ground : background) {
             ground.dispose();
         }
     }
+
 }
