@@ -1,5 +1,7 @@
 package game.xonix.model;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -18,6 +20,7 @@ public class PlayerSingleton {
     private Rectangle playerGround;
     private final int MOVEMENT = 250;
     private Animation playerAnimation;
+    private Sound deathSound;
 
     private PlayerSingleton(int x, int y) {
         position = new Vector3(x, y, 0);
@@ -28,6 +31,8 @@ public class PlayerSingleton {
         frames.add(new TextureRegion(new Texture("anim4.png")));
         frames.add(new TextureRegion(new Texture("anim3.png")));
         playerAnimation = new Animation(0.45f, frames, 4);
+        deathSound = Gdx.audio.newSound(Gdx.files.internal("deathSound.mp3"));
+
     }
 
     private static PlayerSingleton instance;
@@ -51,7 +56,9 @@ public class PlayerSingleton {
     public void kill() {
         position.x = 12;
         position.y = 0;
+        deathSound.play();
         playerGround.setPosition(position.x, position.y);
+
     }
 
     public int getMovement() {
