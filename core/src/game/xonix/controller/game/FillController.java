@@ -35,18 +35,15 @@ public class FillController {
         if (temporaryGround.getBoundsGround() == null) return;
         this.temporaryGround.add(temporaryGround);
         temporaryGround.deleteBoundsGround();
-        for (int dx = -24; dx < 48; dx += 24){
-            fillTemporary(x+24, y);
-            fillTemporary(x-24, y);
-            fillTemporary(x, y + 24);
-            fillTemporary(x, y - 24);
-        }
+        for (int dx = -24; dx < 48; dx += 24)
+            for (int dy = -24; dy < 48; dy += 24) fillTemporary(x + dx, y + dy);
     }
 
     void tryToFill() {
         long timer = -System.currentTimeMillis();
-        for (Enemy enemy : enemyList)
+        for (Enemy enemy : enemyList) {
             fillTemporary(correctXPosition(enemy), correctYPosition(enemy));
+        }
         timer += System.currentTimeMillis();
         System.out.println("C.m(Рекурсия) " + timer);
         for (Ground groundElement: ground.getBackground()) {
@@ -75,11 +72,8 @@ public class FillController {
     private int correctYPosition(Enemy enemy) {
         int currentPositionY = (int)(enemy.getPosition().y % 24);
         if (currentPositionY != 0) {
-            if (currentPositionY >= 12)
-                return (int)enemy.getPosition().y + 24 - currentPositionY;
-            else
-                 return (int)enemy.getPosition().y - currentPositionY;
+                return (int)(enemy.getPosition().y - currentPositionY);
         }
-        return (int) enemy.getPosition().x;
+        return (int) enemy.getPosition().y;
     }
 }
