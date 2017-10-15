@@ -12,6 +12,7 @@ import game.xonix.controller.enemy.EnemyController;
 import game.xonix.controller.player.*;
 import game.xonix.model.Enemy;
 import game.xonix.view.Background;
+import game.xonix.view.DrawUI;
 import game.xonix.view.DrawWall;
 
 /**
@@ -28,6 +29,7 @@ public class PlayController extends Controller {
     private boolean wasCollision = false;
     private EnemyController enemyController;
     private FillController fillController;
+    private DrawUI ui;
 
     public PlayController(GameControllerManager gsm) {
         super(gsm);
@@ -37,6 +39,7 @@ public class PlayController extends Controller {
         player = new PlayerDefaultController();
         collisionController = new FieldCollisionController(drawWall.getWalls(), background.getBackground());
         fillController = new FillController(drawWall.getWalls(), background, enemyController.getEnemyList());
+        ui = new DrawUI();
     }
 
     @Override
@@ -97,6 +100,7 @@ public class PlayController extends Controller {
         if(!backgroundDrawed) background.render(sb);
         drawWall.render(sb);
         player.draw(sb);
+        ui.render(sb);
         for (Enemy enemy : enemyController.getEnemyList()) {
             enemy.draw(sb);
         }
