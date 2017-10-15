@@ -38,7 +38,7 @@ public class EnemyController {
 //        Рандом по заданному диапазону
 //         =  Min + (int)(Math.random() * ((Max - Min) + 1))
         int x  = (int) (Math.random() * ((Xonix.WIDTH - Xonix.SPRITESIZE * 5) - (Xonix.SPRITESIZE * 5)) + 1) + Xonix.SPRITESIZE * 5;
-        int y  = (int) (Math.random() * ((Xonix.HEIGHT- Xonix.SPRITESIZE * 4) - (Xonix.SPRITESIZE * 4)) + 1) + Xonix.SPRITESIZE * 4;
+        int y  = (int) (Math.random() * ((Xonix.HEIGHT- Xonix.SPRITESIZE * 6) - (Xonix.SPRITESIZE * 4)) + 1) + Xonix.SPRITESIZE * 4;
         enemyList.add(new Enemy(x, y));
     }
 

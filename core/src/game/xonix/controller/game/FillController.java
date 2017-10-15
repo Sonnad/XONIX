@@ -30,8 +30,8 @@ public class FillController {
 
     private void fillTemporary(int x, int y) {
         if (x < 72 || x > 1104) return;
-        if (y < 48 || y > 864) return;
-        Ground temporaryGround = ground.getBackground().get((x / Xonix.SPRITESIZE) * 38 + (y / Xonix.SPRITESIZE));
+        if (y < 48 || y > 816) return;
+        Ground temporaryGround = ground.getBackground().get((x / Xonix.SPRITESIZE) * 36 + (y / Xonix.SPRITESIZE));
         if (temporaryGround.getBoundsGround() == null) return;
         this.temporaryGround.add(temporaryGround);
         temporaryGround.deleteBoundsGround();

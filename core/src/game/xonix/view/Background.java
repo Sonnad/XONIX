@@ -20,7 +20,7 @@ public class Background {
     public Background() {
         background = new LinkedList<Ground>();
         for (int i = 0; i < Xonix.WIDTH; i+=Xonix.SPRITESIZE) {
-            for (int j = 0; j < Xonix.HEIGHT; j+=Xonix.SPRITESIZE) {
+            for (int j = 0; j < Xonix.HEIGHT-48; j+=Xonix.SPRITESIZE) {
                 background.add(new Ground(i, j, isGameField(i, j)));
             }
         }

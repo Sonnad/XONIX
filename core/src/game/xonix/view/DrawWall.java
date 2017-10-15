@@ -18,7 +18,7 @@ public class DrawWall {
     public DrawWall() {
         walls = new LinkedList<Wall>();
         for (int i = 0; i < Xonix.WIDTH; i+=Xonix.SPRITESIZE) {
-            for (int j = 0; j < Xonix.HEIGHT; j+=Xonix.SPRITESIZE) {
+            for (int j = 0; j < Xonix.HEIGHT-48; j+=Xonix.SPRITESIZE) {
                 //Рисуем границы игрового поля. Границы - 2 блока в высоту снизу/cверху  и 3 блока в ширину слева/справа
                 //Проверяем, если координаты соответствуют описанному выше условию - рисуем стену
                 if (i < Xonix.SPRITESIZE*3) {
@@ -36,7 +36,7 @@ public class DrawWall {
                     continue;
                 }
 
-                if (j >= Xonix.HEIGHT-Xonix.SPRITESIZE*2) {
+                if (j >= Xonix.HEIGHT-Xonix.SPRITESIZE*4) {
                     walls.add(new Wall(i, j));
                     continue;
                 }
