@@ -9,13 +9,12 @@ import com.badlogic.gdx.math.Vector3;
  */
 
 public class Ground {
-    Texture ground;
+    private static final Texture ground = new Texture("ground_2.png");
     private Vector3 position;
     private Rectangle boundsGround;
 
     public Ground(int x, int y, boolean isGameField) {
         position = new Vector3(x, y, 0);
-        ground = new Texture("ground_2.png");
         if(isGameField) boundsGround = new Rectangle(position.x, position.y, ground.getWidth(), ground.getHeight());
     }
 

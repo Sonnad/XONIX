@@ -9,13 +9,12 @@ import com.badlogic.gdx.math.Vector3;
  */
 
 public class Wall {
-    Texture wall;
+    static final Texture wall =  new Texture("crate_2.png");
     private Vector3 position;
     private Rectangle boundsWall;
 
     public Wall(float x, float y) {
         position = new Vector3(x, y, 0);
-        wall = new Texture("crate_2.png");
         boundsWall = new Rectangle(position.x, position.y, wall.getWidth(), wall.getHeight());
     }
 
