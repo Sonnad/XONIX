@@ -21,6 +21,7 @@ public class PlayerSingleton {
     private final int MOVEMENT = 250;
     private Animation playerAnimation;
     private Sound deathSound;
+    private int lifes = 10;
 
     private PlayerSingleton(int x, int y) {
         position = new Vector3(x, y, 0);
@@ -58,8 +59,14 @@ public class PlayerSingleton {
         position.y = 0;
         deathSound.play();
         playerGround.setPosition(position.x, position.y);
+        lifes--;
 
     }
+
+    public int getLifes() {
+        return lifes;
+    }
+
 
     public int getMovement() {
         return MOVEMENT;

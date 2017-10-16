@@ -1,39 +1,62 @@
 package game.xonix.view;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 
 import java.util.LinkedList;
 
 import game.xonix.Xonix;
-import game.xonix.model.Ground;
+import game.xonix.model.PlayerSingleton;
 import game.xonix.model.UI;
-import game.xonix.model.Wall;
 
 /**
  * Created by Sonad on 16.10.17.
  */
 
 public class DrawUI {
+
     private LinkedList<UI> ui;
+    public static BitmapFont font;
+    FreeTypeFontGenerator generator;
+    FreeTypeFontParameter parameter;
 
     public DrawUI() {
+        generateFont();
         ui = new LinkedList<UI>();
+        addUIElements();
+    }
+
+    private  void generateFont() {
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/kenpixel_blocks.ttf"));
+        parameter = new FreeTypeFontParameter();
+        parameter.size = 24;
+        parameter.color = Color.BLACK;
+        font = generator.generateFont(parameter);
+    }
+
+    private void addUIElements() {
         ui.add(new UI(0, Xonix.HEIGHT-24, new Texture("tile_4.png")));
         ui.add(new UI(0, Xonix.HEIGHT - 48, new Texture("tile_3.png")));
         ui.add(new UI(Xonix.WIDTH-24, Xonix.HEIGHT-24, new Texture("tile_1.png")));
         ui.add(new UI(Xonix.WIDTH-24, Xonix.HEIGHT-48, new Texture("tile_2.png")));
         for (int i = 24; i <= Xonix.WIDTH-48; i+=Xonix.SPRITESIZE) {
             for (int j = Xonix.HEIGHT; j >= Xonix.HEIGHT - 48; j-=Xonix.SPRITESIZE) {
-                 if (j == Xonix.HEIGHT-24) ui.add(new UI(i,j, new Texture("tile_5.png")));
+                if (j == Xonix.HEIGHT-24) ui.add(new UI(i,j, new Texture("tile_5.png")));
                 else ui.add(new UI(i,j, new Texture("tile_6.png")));
             }
         }
+        ui.add(new UI(40, Xonix.HEIGHT-44, new Texture("hearth.png")));
     }
 
     public void render(SpriteBatch sb) {
         for (UI uiElement : ui) {
             sb.draw(uiElement.getTexture(), uiElement.getPosition().x, uiElement.getPosition().y);
+            font.draw(sb, ""+PlayerSingleton.getInstance().getLifes(), 80, Xonix.HEIGHT - 14);
         }
 
     }
@@ -46,7 +69,10 @@ public class DrawUI {
         for (UI uiElement : ui) {
             uiElement.dispose();
         }
+        font.dispose();
+        generator.dispose();
     }
+
 
 
 }
