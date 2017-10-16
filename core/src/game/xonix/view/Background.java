@@ -58,12 +58,6 @@ public class Background {
         return background;
     }
 
-    public Ground getGround(Rectangle rectangle) {
-        for (Ground ground : background) {
-            if (ground.getBoundsGround().overlaps(rectangle)) return ground;
-        }
-        return null;
-    }
 
     public void dispose() {
         for (Ground ground : background) {

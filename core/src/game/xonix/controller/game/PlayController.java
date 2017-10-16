@@ -11,6 +11,7 @@ import game.xonix.controller.PlayerController;
 import game.xonix.controller.enemy.EnemyController;
 import game.xonix.controller.player.*;
 import game.xonix.model.Enemy;
+import game.xonix.model.PlayerSingleton;
 import game.xonix.view.Background;
 import game.xonix.view.DrawUI;
 import game.xonix.view.DrawWall;
@@ -24,15 +25,16 @@ public class PlayController extends Controller {
     private DrawWall drawWall;
     private PlayerController player;
     private FieldCollisionController collisionController;
-    private boolean backgroundDrawed = false;
     private Direction lastKeyPressed;
     private boolean wasCollision = false;
     private EnemyController enemyController;
     private FillController fillController;
     private DrawUI ui;
+    GameControllerManager gsm;
 
     public PlayController(GameControllerManager gsm) {
         super(gsm);
+        this.gsm = gsm;
         drawWall = new DrawWall();
         background = new Background();
         enemyController = new EnemyController(background.getBackground() , drawWall.getWalls(), 10);
@@ -73,6 +75,9 @@ public class PlayController extends Controller {
         handleInput();
         player.update(dt);
         enemyController.update(dt, collisionController.getNewWall());
+        if (PlayerSingleton.getInstance().isDead()) {
+            gsm.set(new GameOverController(gsm, background, drawWall, enemyController, ui, collisionController.getNewWall()));
+        }
         if(collisionController.isFieldCollision()) {
             if (!wasCollision)
                 player = new PlayerCollisionController(lastKeyPressed);
@@ -97,7 +102,7 @@ public class PlayController extends Controller {
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
-        if(!backgroundDrawed) background.render(sb);
+        background.render(sb);
         drawWall.render(sb);
         player.draw(sb);
         ui.render(sb);
@@ -109,8 +114,11 @@ public class PlayController extends Controller {
 
     @Override
     public void dispose() {
-        background.dispose();
-        drawWall.dispose();
+        if (!PlayerSingleton.getInstance().isDead()) {
+            background.dispose();
+            drawWall.dispose();
+            ui.dispose();
+        }
     }
 
 }

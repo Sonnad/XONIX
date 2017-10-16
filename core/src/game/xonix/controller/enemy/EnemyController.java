@@ -97,8 +97,8 @@ public class EnemyController {
                 }
             }
         }
-        newWall.clear();
         player.kill();
+        if (!player.isDead()) newWall.clear();
     }
 
     private boolean contains(LinkedList<Wall> wallList, Wall wall) {
