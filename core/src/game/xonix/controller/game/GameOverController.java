@@ -1,11 +1,13 @@
 package game.xonix.controller.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.LinkedList;
 
@@ -14,11 +16,13 @@ import game.xonix.controller.Controller;
 import game.xonix.controller.GameControllerManager;
 import game.xonix.controller.enemy.EnemyController;
 import game.xonix.model.Enemy;
+import game.xonix.model.PlayButton;
 import game.xonix.model.PlayerSingleton;
 import game.xonix.model.Wall;
 import game.xonix.view.Background;
 import game.xonix.view.DrawUI;
 import game.xonix.view.DrawWall;
+import game.xonix.view.Fonts.GameOverFont;
 
 /**
  * Created by Sonad on 16.10.17.
@@ -33,11 +37,12 @@ public class GameOverController extends Controller {
     private DrawUI ui;
     private LinkedList<Wall> playerWall;
     private Texture backgroundTexture;
-    public static BitmapFont font;
-    FreeTypeFontGenerator generator;
-    FreeTypeFontGenerator.FreeTypeFontParameter parameter;
+    protected Stage stage;
+    private Viewport viewport;
+    private PlayButton playButton;
+    boolean rendered = false;
 
-    public GameOverController(GameControllerManager grm, Background background, DrawWall drawWall, EnemyController enemyController, DrawUI ui,LinkedList<Wall> playerWal ) {
+    public GameOverController(final GameControllerManager grm, Background background, DrawWall drawWall, EnemyController enemyController, DrawUI ui,LinkedList<Wall> playerWal ) {
         super(grm);
         this.background = background;
         this.drawWall = drawWall;
@@ -45,16 +50,20 @@ public class GameOverController extends Controller {
         this.ui = ui;
         this.playerWall = playerWal;
         backgroundTexture = new Texture("GameOver.png");
-        generateFont();
+        Gdx.input.setInputProcessor(stage);
+        viewport = new FitViewport(Xonix.WIDTH, Xonix.HEIGHT, camera);
+        viewport.apply();
+        playButton = new PlayButton();
+        playButton.setPosition((Xonix.WIDTH/2), Xonix.HEIGHT/2-300);
+        playButton.getPlayButton().addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                stage.dispose();
+                grm.set(new MenuController(grm));
+            }
+        });
     }
 
-    private  void generateFont() {
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/kenpixel_blocks.ttf"));
-        parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 100;
-        parameter.color = Color.BLACK;
-        font = generator.generateFont(parameter);
-    }
 
     @Override
     protected void handleInput() {
@@ -68,20 +77,28 @@ public class GameOverController extends Controller {
 
     @Override
     public void render(SpriteBatch sb) {
+        if (!rendered) {
+            stage = new Stage(viewport, sb);
+            Gdx.input.setInputProcessor(stage);
+            stage.addActor(playButton.getPlayButton());
+            rendered = true;
+        }
         sb.begin();
         background.render(sb);
         drawWall.render(sb);
         ui.render(sb);
-        for (Enemy enemy : enemyController.getEnemyList()) {
-            enemy.draw(sb);
-        }
         for (Wall wall : playerWall) {
             sb.draw(wall.getWall(), wall.getPosition().x, wall.getPosition().y);
         }
+        for (Enemy enemy : enemyController.getEnemyList()) {
+            enemy.draw(sb);
+        }
         sb.draw(player.getPlayer(), player.getPosition().x, player.getPosition().y);
         sb.draw(backgroundTexture, 0, 0, Xonix.WIDTH, Xonix.HEIGHT);
-        font.draw(sb, "GAME OVER", Xonix.WIDTH/2-300, Xonix.HEIGHT/2+50);
+        GameOverFont.font.draw(sb, "GAME OVER", Xonix.WIDTH/2-310, Xonix.HEIGHT/2+75);
         sb.end();
+        stage.act();
+        stage.draw();
     }
 
     @Override

@@ -21,10 +21,12 @@ public class PlayerSingleton {
     private final int MOVEMENT = 250;
     private Animation playerAnimation;
     private Sound deathSound;
-    private int lifes = 1;
-    private boolean isDead = false;
+    private int lifes;
+    private boolean isDead;
 
     private PlayerSingleton(int x, int y) {
+        lifes = 1;
+        isDead = false;
         position = new Vector3(x, y, 0);
         playerGround = new Rectangle(36, 12, 1 , 1);
         Array<TextureRegion> frames = new Array<TextureRegion>();
@@ -67,6 +69,10 @@ public class PlayerSingleton {
         deathSound.play();
         playerGround.setPosition(position.x, position.y);
 
+    }
+
+    public static void delete() {
+        instance = null;
     }
 
     public int getLifes() {

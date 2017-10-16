@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import game.xonix.controller.GameControllerManager;
 import game.xonix.controller.game.MenuController;
+import game.xonix.view.Fonts.*;
 
 public class Xonix extends ApplicationAdapter {
 	public static final int WIDTH = 1200;
@@ -14,12 +15,16 @@ public class Xonix extends ApplicationAdapter {
 	public static final String TITLE = "XONIX";
 	public static final int SPRITESIZE = 24;
 
+	private GameOverFont gameOverFont;
+	private GameUIFont gameUIFont;
 	private GameControllerManager grm;
 	private SpriteBatch batch;
 
 
 	@Override
 	public void create () {
+		gameOverFont = new GameOverFont();
+		gameUIFont = new GameUIFont();
 		batch = new SpriteBatch();
 		grm = new GameControllerManager();
 		Gdx.gl.glClearColor(1, 0, 0, 1);

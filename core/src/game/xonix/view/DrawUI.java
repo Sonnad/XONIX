@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import game.xonix.Xonix;
 import game.xonix.model.PlayerSingleton;
 import game.xonix.model.UI;
+import game.xonix.view.Fonts.*;
 
 /**
  * Created by Sonad on 16.10.17.
@@ -21,22 +22,10 @@ import game.xonix.model.UI;
 public class DrawUI {
 
     private LinkedList<UI> ui;
-    public static BitmapFont font;
-    FreeTypeFontGenerator generator;
-    FreeTypeFontParameter parameter;
 
     public DrawUI() {
-        generateFont();
         ui = new LinkedList<UI>();
         addUIElements();
-    }
-
-    private  void generateFont() {
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/kenpixel_blocks.ttf"));
-        parameter = new FreeTypeFontParameter();
-        parameter.size = 24;
-        parameter.color = Color.BLACK;
-        font = generator.generateFont(parameter);
     }
 
     private void addUIElements() {
@@ -56,7 +45,7 @@ public class DrawUI {
     public void render(SpriteBatch sb) {
         for (UI uiElement : ui) {
             sb.draw(uiElement.getTexture(), uiElement.getPosition().x, uiElement.getPosition().y);
-            font.draw(sb, ""+PlayerSingleton.getInstance().getLifes(), 80, Xonix.HEIGHT - 14);
+            GameUIFont.font.draw(sb, ""+PlayerSingleton.getInstance().getLifes(), 80, Xonix.HEIGHT - 14);
         }
 
     }
@@ -69,8 +58,6 @@ public class DrawUI {
         for (UI uiElement : ui) {
             uiElement.dispose();
         }
-        font.dispose();
-        generator.dispose();
     }
 
 

@@ -30,10 +30,11 @@ public class PlayController extends Controller {
     private EnemyController enemyController;
     private FillController fillController;
     private DrawUI ui;
-    GameControllerManager gsm;
+    private GameControllerManager gsm;
 
     public PlayController(GameControllerManager gsm) {
         super(gsm);
+        PlayerSingleton.delete();
         this.gsm = gsm;
         drawWall = new DrawWall();
         background = new Background();
@@ -77,6 +78,7 @@ public class PlayController extends Controller {
         enemyController.update(dt, collisionController.getNewWall());
         if (PlayerSingleton.getInstance().isDead()) {
             gsm.set(new GameOverController(gsm, background, drawWall, enemyController, ui, collisionController.getNewWall()));
+            return;
         }
         if(collisionController.isFieldCollision()) {
             if (!wasCollision)

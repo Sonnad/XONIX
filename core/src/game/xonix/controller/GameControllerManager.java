@@ -24,7 +24,7 @@ public class GameControllerManager {
     }
 
     public void set(Controller state) {
-        this.states.pop().dispose();
+        pop();
         this.states.push(state);
     }
 

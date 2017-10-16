@@ -37,4 +37,9 @@ public class PlayButton {
         buttonsSkin.dispose();
     }
 
+    public void setPosition(int x, int y) {
+        playButton.setPosition(x-(playButton.getWidth()/2), y);
+    }
+
+
 }
