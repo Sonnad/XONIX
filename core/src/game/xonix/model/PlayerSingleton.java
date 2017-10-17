@@ -71,6 +71,14 @@ public class PlayerSingleton {
 
     }
 
+    public void addLife() {
+        lifes++;
+    }
+
+    public void resetPosition() {
+        position = new Vector3(12, 0, 0);
+    }
+
     public static void delete() {
         instance = null;
     }

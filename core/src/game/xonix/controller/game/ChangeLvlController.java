@@ -1,7 +1,6 @@
 package game.xonix.controller.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -26,10 +25,10 @@ import game.xonix.view.DrawWall;
 import game.xonix.view.Fonts.GameOverFont;
 
 /**
- * Created by Sonad on 16.10.17.
+ * Created by Sonad on 17.10.17.
  */
 
-public class GameOverController extends Controller {
+public class ChangeLvlController extends Controller {
 
     private Background background;
     private DrawWall drawWall;
@@ -37,23 +36,22 @@ public class GameOverController extends Controller {
     private EnemyController enemyController;
     private DrawUI ui;
     private LinkedList<Wall> playerWall;
-    private Texture backgroundTexture;
     protected Stage stage;
     private Viewport viewport;
     private PlayButton playButton;
-    boolean rendered = false;
+    private boolean rendered = false;
+    private int percent;
 
-    public GameOverController(final GameControllerManager grm, Background background, DrawWall drawWall, EnemyController enemyController, DrawUI ui,LinkedList<Wall> playerWal ) {
+    public ChangeLvlController(final GameControllerManager grm, Background background, DrawWall drawWall, EnemyController enemyController, DrawUI ui,LinkedList<Wall> playerWal, int percent) {
         super(grm);
-        PlayController.gameOver();
-        PlayerSingleton.delete();
-        Gdx.audio.newSound(Gdx.files.internal("trombon.mp3")).play();
+        this.percent = percent;
+        Gdx.audio.newSound(Gdx.files.internal("applause8.mp3")).play();
+        PlayerSingleton.getInstance().addLife();
         this.background = background;
         this.drawWall = drawWall;
         this.enemyController = enemyController;
         this.ui = ui;
         this.playerWall = playerWal;
-        backgroundTexture = new Texture("GameOver.png");
         Gdx.input.setInputProcessor(stage);
         viewport = new FitViewport(Xonix.WIDTH, Xonix.HEIGHT, camera);
         viewport.apply();
@@ -63,7 +61,7 @@ public class GameOverController extends Controller {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 stage.dispose();
-                grm.set(new MenuController(grm));
+                grm.set(new PlayController(grm));
             }
         });
     }
@@ -98,8 +96,7 @@ public class GameOverController extends Controller {
             enemy.draw(sb);
         }
         sb.draw(player.getPlayer(), player.getPosition().x, player.getPosition().y);
-        sb.draw(backgroundTexture, 0, 0, Xonix.WIDTH, Xonix.HEIGHT);
-        GameOverFont.font.draw(sb, "GAME OVER", Xonix.WIDTH/2-310, Xonix.HEIGHT/2+75);
+        GameOverFont.font.draw(sb, "LEVEL complete\n" + percent+"% are cleared", 100, Xonix.HEIGHT/2+200);
         sb.end();
         stage.act();
         stage.draw();

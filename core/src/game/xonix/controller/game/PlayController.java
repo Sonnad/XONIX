@@ -43,7 +43,7 @@ public class PlayController extends Controller {
 
     public PlayController(GameControllerManager gsm) {
         super(gsm);
-        PlayerSingleton.delete();
+        PlayerSingleton.getInstance().resetPosition();
         this.gsm = gsm;
         drawWall = new DrawWall();
         background = new Background();
@@ -113,6 +113,9 @@ public class PlayController extends Controller {
             }
         ui.update(percent, time, score);
         drawWall.deleteDuplicate();
+        if (percent >= 80) {
+            gsm.set(new ChangeLvlController(gsm, background, drawWall, enemyController, ui, collisionController.getNewWall(), (int) percent));
+        }
     }
 
     @Override
@@ -130,16 +133,16 @@ public class PlayController extends Controller {
 
     public static void gameOver() {
         score = 0;
-        lvl = 0;
+        lvl = 2;
     }
 
     @Override
     public void dispose() {
-        if (!PlayerSingleton.getInstance().isDead()) {
-            background.dispose();
-            drawWall.dispose();
-            ui.dispose();
-        }
+//        if (!PlayerSingleton.getInstance().isDead() && percent < 80) {
+//            background.dispose();
+//            drawWall.dispose();
+//            ui.dispose();
+//        }
     }
 
 }
