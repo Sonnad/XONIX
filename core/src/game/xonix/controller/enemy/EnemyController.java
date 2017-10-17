@@ -93,7 +93,6 @@ public class EnemyController {
                 Wall wall = iter.next();
                 if (wall.equals(playerWall)) {
                     iter.remove();
-                    break;
                 }
             }
         }

@@ -41,7 +41,7 @@ public class Background {
             return false;
         }
 
-        if (j >= Xonix.HEIGHT-Xonix.SPRITESIZE*2) {
+        if (j >= Xonix.HEIGHT-Xonix.SPRITESIZE*4) {
             return false;
         }
 
@@ -57,7 +57,6 @@ public class Background {
     public LinkedList<Ground> getBackground() {
         return background;
     }
-
 
     public void dispose() {
         for (Ground ground : background) {

@@ -1,6 +1,7 @@
 package game.xonix.controller.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -44,6 +45,7 @@ public class GameOverController extends Controller {
 
     public GameOverController(final GameControllerManager grm, Background background, DrawWall drawWall, EnemyController enemyController, DrawUI ui,LinkedList<Wall> playerWal ) {
         super(grm);
+        Gdx.audio.newSound(Gdx.files.internal("trombon.mp3")).play();
         this.background = background;
         this.drawWall = drawWall;
         this.enemyController = enemyController;
@@ -103,8 +105,8 @@ public class GameOverController extends Controller {
 
     @Override
     public void dispose() {
-        background.dispose();
-        drawWall.dispose();
+//        background.dispose();
+//        drawWall.dispose();
         ui.dispose();
     }
 }

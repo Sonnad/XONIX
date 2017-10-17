@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import java.util.Locale;
+
+import game.xonix.Xonix;
 import game.xonix.controller.Controller;
 import game.xonix.controller.Direction;
 import game.xonix.controller.GameControllerManager;
@@ -15,6 +18,7 @@ import game.xonix.model.PlayerSingleton;
 import game.xonix.view.Background;
 import game.xonix.view.DrawUI;
 import game.xonix.view.DrawWall;
+import game.xonix.view.Fonts.GameUIFont;
 
 /**
  * Created by Sonad on 26.09.17.
@@ -31,6 +35,8 @@ public class PlayController extends Controller {
     private FillController fillController;
     private DrawUI ui;
     private GameControllerManager gsm;
+    private int maxArea;
+    private double percent;
 
     public PlayController(GameControllerManager gsm) {
         super(gsm);
@@ -38,7 +44,8 @@ public class PlayController extends Controller {
         this.gsm = gsm;
         drawWall = new DrawWall();
         background = new Background();
-        enemyController = new EnemyController(background.getBackground() , drawWall.getWalls(), 10);
+        maxArea = background.getBackground().size()-drawWall.getWalls().size();
+        enemyController = new EnemyController(background.getBackground() , drawWall.getWalls(), 4);
         player = new PlayerDefaultController();
         collisionController = new FieldCollisionController(drawWall.getWalls(), background.getBackground());
         fillController = new FillController(drawWall.getWalls(), background, enemyController.getEnemyList());
@@ -89,16 +96,16 @@ public class PlayController extends Controller {
             if(wasCollision) {
                 if (!enemyController.isPlayerCollision()) {
                     collisionController.clearGround();
-                    long timer = -System.currentTimeMillis();
                     fillController.tryToFill();
-                    timer += System.currentTimeMillis();
-                    System.out.println("C.m(fillController.tryToFill()) " + timer);
+                    percent = (100.0/maxArea) * (drawWall.getWalls().size() - 392);
                 }
                 enemyController.setPlayerCollision(false);
                 player = new PlayerDefaultController();
                 collisionController.clear();
                 wasCollision = false;
             }
+        ui.update(percent);
+        drawWall.deleteDuplicate();
     }
 
     @Override

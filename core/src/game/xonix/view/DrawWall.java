@@ -3,7 +3,9 @@ package game.xonix.view;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.ListIterator;
 
 import game.xonix.Xonix;
 import game.xonix.model.Ground;
@@ -50,6 +52,23 @@ public class DrawWall {
             sb.draw(wall.getWall(), wall.getPosition().x, wall.getPosition().y);
         }
 
+    }
+
+    public void deleteDuplicate() {
+        Iterator<Wall> firstIter = walls.iterator();
+        while (firstIter.hasNext()) {
+            Wall duplicateWall = firstIter.next();
+            Iterator<Wall> secondIter = walls.iterator();
+            secondIter.next();
+            while (secondIter.hasNext()) {
+                Wall wall = secondIter.next();
+                if (duplicateWall == wall) continue;
+                if (wall.equals(duplicateWall)) {
+                    firstIter.remove();
+                    break;
+                }
+            }
+        }
     }
 
     public LinkedList<Wall> getWalls() {

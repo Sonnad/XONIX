@@ -25,7 +25,7 @@ public class PlayerSingleton {
     private boolean isDead;
 
     private PlayerSingleton(int x, int y) {
-        lifes = 1;
+        lifes = 3;
         isDead = false;
         position = new Vector3(x, y, 0);
         playerGround = new Rectangle(36, 12, 1 , 1);

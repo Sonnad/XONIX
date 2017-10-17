@@ -40,16 +40,13 @@ public class FillController {
     }
 
     void tryToFill() {
-        long timer = -System.currentTimeMillis();
         for (Enemy enemy : enemyList) {
             fillTemporary(correctXPosition(enemy), correctYPosition(enemy));
         }
-        timer += System.currentTimeMillis();
-        System.out.println("C.m(Рекурсия) " + timer);
         for (Ground groundElement: ground.getBackground()) {
             if (groundElement.getBoundsGround() == null) continue;
                 groundElement.deleteBoundsGround();
-                walls.add(new Wall(groundElement.getPosition().x, groundElement.getPosition().y));
+                walls.add(0, new Wall(groundElement.getPosition().x, groundElement.getPosition().y));
         }
 
         for (Ground groundElement : temporaryGround) {

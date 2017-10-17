@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 
 import java.util.LinkedList;
+import java.util.Locale;
 
 import game.xonix.Xonix;
 import game.xonix.model.PlayerSingleton;
@@ -22,10 +23,13 @@ import game.xonix.view.Fonts.*;
 public class DrawUI {
 
     private LinkedList<UI> ui;
+    private double percent;
+    private int hearthCount;
 
     public DrawUI() {
         ui = new LinkedList<UI>();
         addUIElements();
+        hearthCount = PlayerSingleton.getInstance().getLifes();
     }
 
     private void addUIElements() {
@@ -39,13 +43,23 @@ public class DrawUI {
                 else ui.add(new UI(i,j, new Texture("tile_6.png")));
             }
         }
-        ui.add(new UI(40, Xonix.HEIGHT-44, new Texture("hearth.png")));
+        for (int i = 0, j = 10; i <= PlayerSingleton.getInstance().getLifes(); i++, j+=30) {
+            ui.add(new UI(j, Xonix.HEIGHT-44, new Texture("hearth.png")));
+        }
+    }
+
+    public void update(double percent) {
+        this.percent = percent;
+        if (hearthCount!=PlayerSingleton.getInstance().getLifes()) {
+            hearthCount--;
+            ui.removeLast();
+        }
     }
 
     public void render(SpriteBatch sb) {
         for (UI uiElement : ui) {
             sb.draw(uiElement.getTexture(), uiElement.getPosition().x, uiElement.getPosition().y);
-            GameUIFont.font.draw(sb, ""+PlayerSingleton.getInstance().getLifes(), 80, Xonix.HEIGHT - 14);
+            GameUIFont.font.draw(sb, String.format(Locale.ENGLISH,"Progress: %(.2f", percent) + "%", Xonix.WIDTH - 295, Xonix.HEIGHT - 14);
         }
 
     }
