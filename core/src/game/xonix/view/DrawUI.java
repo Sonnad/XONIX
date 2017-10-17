@@ -46,8 +46,8 @@ public class DrawUI {
                 else ui.add(new UI(i,j, new Texture("tile_6.png")));
             }
         }
-        ui.add(new UI(Xonix.WIDTH - 450, Xonix.HEIGHT-37, new Texture("clock.png")));
-        for (int i = 0, j = 10; i <= PlayerSingleton.getInstance().getLifes(); i++, j+=30) {
+        ui.add(new UI(Xonix.WIDTH - 460, Xonix.HEIGHT-37, new Texture("clock.png")));
+        for (int i = 0, j = 20; i <= PlayerSingleton.getInstance().getLifes(); i++, j+=30) {
             ui.add(new UI(j, Xonix.HEIGHT-44, new Texture("hearth.png")));
         }
     }
@@ -66,10 +66,10 @@ public class DrawUI {
     public void render(SpriteBatch sb) {
         for (UI uiElement : ui) {
             sb.draw(uiElement.getTexture(), uiElement.getPosition().x, uiElement.getPosition().y);
-            GameUIFont.font.draw(sb, String.format(Locale.ENGLISH,"Progress: %(.2f", percent) + "%", Xonix.WIDTH - 295, Xonix.HEIGHT - 14);
+            GameUIFont.font.draw(sb, "Progress: " + (int)percent + "/80%", Xonix.WIDTH - 305, Xonix.HEIGHT - 14);
         }
-        GameUIFont.font.draw(sb, String.format("%02d:%02d",minute, second), Xonix.WIDTH - 415, Xonix.HEIGHT - 14);
-        GameUIFont.font.draw(sb, "Score: " + score, Xonix.WIDTH - 710, Xonix.HEIGHT - 14);
+        GameUIFont.font.draw(sb, String.format("%02d:%02d",minute, second), Xonix.WIDTH - 425, Xonix.HEIGHT - 14);
+        GameUIFont.font.draw(sb, "Score: " + score, Xonix.WIDTH - 720, Xonix.HEIGHT - 14);
 
     }
 
