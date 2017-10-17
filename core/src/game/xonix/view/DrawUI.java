@@ -24,7 +24,10 @@ public class DrawUI {
 
     private LinkedList<UI> ui;
     private double percent;
+    private long second;
+    private long minute;
     private int hearthCount;
+    private long score;
 
     public DrawUI() {
         ui = new LinkedList<UI>();
@@ -43,17 +46,21 @@ public class DrawUI {
                 else ui.add(new UI(i,j, new Texture("tile_6.png")));
             }
         }
+        ui.add(new UI(Xonix.WIDTH - 450, Xonix.HEIGHT-37, new Texture("clock.png")));
         for (int i = 0, j = 10; i <= PlayerSingleton.getInstance().getLifes(); i++, j+=30) {
             ui.add(new UI(j, Xonix.HEIGHT-44, new Texture("hearth.png")));
         }
     }
 
-    public void update(double percent) {
+    public void update(double percent, long time, long score) {
         this.percent = percent;
         if (hearthCount!=PlayerSingleton.getInstance().getLifes()) {
             hearthCount--;
             ui.removeLast();
         }
+        second = (time / 1000) % 60;
+        minute = (time / (1000 * 60)) % 60;
+        this.score = score;
     }
 
     public void render(SpriteBatch sb) {
@@ -61,6 +68,8 @@ public class DrawUI {
             sb.draw(uiElement.getTexture(), uiElement.getPosition().x, uiElement.getPosition().y);
             GameUIFont.font.draw(sb, String.format(Locale.ENGLISH,"Progress: %(.2f", percent) + "%", Xonix.WIDTH - 295, Xonix.HEIGHT - 14);
         }
+        GameUIFont.font.draw(sb, String.format("%02d:%02d",minute, second), Xonix.WIDTH - 415, Xonix.HEIGHT - 14);
+        GameUIFont.font.draw(sb, "Score: " + score, Xonix.WIDTH - 710, Xonix.HEIGHT - 14);
 
     }
 

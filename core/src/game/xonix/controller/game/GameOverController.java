@@ -45,6 +45,7 @@ public class GameOverController extends Controller {
 
     public GameOverController(final GameControllerManager grm, Background background, DrawWall drawWall, EnemyController enemyController, DrawUI ui,LinkedList<Wall> playerWal ) {
         super(grm);
+        PlayController.gameOver();
         Gdx.audio.newSound(Gdx.files.internal("trombon.mp3")).play();
         this.background = background;
         this.drawWall = drawWall;

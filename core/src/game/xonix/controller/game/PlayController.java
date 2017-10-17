@@ -37,6 +37,9 @@ public class PlayController extends Controller {
     private GameControllerManager gsm;
     private int maxArea;
     private double percent;
+    private long startTime;
+    private static long score;
+    private static int lvl = 2;
 
     public PlayController(GameControllerManager gsm) {
         super(gsm);
@@ -45,11 +48,12 @@ public class PlayController extends Controller {
         drawWall = new DrawWall();
         background = new Background();
         maxArea = background.getBackground().size()-drawWall.getWalls().size();
-        enemyController = new EnemyController(background.getBackground() , drawWall.getWalls(), 4);
+        enemyController = new EnemyController(background.getBackground() , drawWall.getWalls(), lvl++);
         player = new PlayerDefaultController();
         collisionController = new FieldCollisionController(drawWall.getWalls(), background.getBackground());
         fillController = new FillController(drawWall.getWalls(), background, enemyController.getEnemyList());
         ui = new DrawUI();
+        startTime = System.currentTimeMillis();
     }
 
     @Override
@@ -82,6 +86,7 @@ public class PlayController extends Controller {
     public void update(float dt) {
         handleInput();
         player.update(dt);
+        long time = System.currentTimeMillis() - startTime;
         enemyController.update(dt, collisionController.getNewWall());
         if (PlayerSingleton.getInstance().isDead()) {
             gsm.set(new GameOverController(gsm, background, drawWall, enemyController, ui, collisionController.getNewWall()));
@@ -96,15 +101,17 @@ public class PlayController extends Controller {
             if(wasCollision) {
                 if (!enemyController.isPlayerCollision()) {
                     collisionController.clearGround();
+                    double oldPercent = percent;
                     fillController.tryToFill();
                     percent = (100.0/maxArea) * (drawWall.getWalls().size() - 392);
+                    score += (percent-oldPercent)/(time/1000) * 2000;
                 }
                 enemyController.setPlayerCollision(false);
                 player = new PlayerDefaultController();
                 collisionController.clear();
                 wasCollision = false;
             }
-        ui.update(percent);
+        ui.update(percent, time, score);
         drawWall.deleteDuplicate();
     }
 
@@ -119,6 +126,11 @@ public class PlayController extends Controller {
             enemy.draw(sb);
         }
         sb.end();
+    }
+
+    public static void gameOver() {
+        score = 0;
+        lvl = 0;
     }
 
     @Override
