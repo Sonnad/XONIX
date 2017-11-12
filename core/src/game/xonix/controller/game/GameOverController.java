@@ -1,7 +1,6 @@
 package game.xonix.controller.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -17,13 +16,14 @@ import game.xonix.controller.Controller;
 import game.xonix.controller.GameControllerManager;
 import game.xonix.controller.enemy.EnemyController;
 import game.xonix.model.Enemy;
-import game.xonix.model.PlayButton;
+import game.xonix.view.PlayButton;
 import game.xonix.model.PlayerSingleton;
 import game.xonix.model.Wall;
 import game.xonix.view.Background;
 import game.xonix.view.DrawUI;
 import game.xonix.view.DrawWall;
 import game.xonix.view.Fonts.GameOverFont;
+import game.xonix.view.Button;
 
 /**
  * Created by Sonad on 16.10.17.
@@ -40,7 +40,7 @@ public class GameOverController extends Controller {
     private Texture backgroundTexture;
     protected Stage stage;
     private Viewport viewport;
-    private PlayButton playButton;
+    private Button playButton;
     boolean rendered = false;
 
     public GameOverController(final GameControllerManager grm, Background background, DrawWall drawWall, EnemyController enemyController, DrawUI ui,LinkedList<Wall> playerWal ) {
@@ -59,7 +59,7 @@ public class GameOverController extends Controller {
         viewport.apply();
         playButton = new PlayButton();
         playButton.setPosition((Xonix.WIDTH/2), Xonix.HEIGHT/2-300);
-        playButton.getPlayButton().addListener(new ClickListener() {
+        playButton.getButton().addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 stage.dispose();
@@ -84,7 +84,7 @@ public class GameOverController extends Controller {
         if (!rendered) {
             stage = new Stage(viewport, sb);
             Gdx.input.setInputProcessor(stage);
-            stage.addActor(playButton.getPlayButton());
+            stage.addActor(playButton.getButton());
             rendered = true;
         }
         sb.begin();

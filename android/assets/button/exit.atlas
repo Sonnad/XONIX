@@ -1,0 +1,27 @@
+
+exit.png
+size: 1024,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+exit1
+  rotate: false
+  xy: 2, 2
+  size: 250, 100
+  orig: 250, 100
+  offset: 0, 0
+  index: -1
+exit2
+  rotate: false
+  xy: 254, 2
+  size: 250, 100
+  orig: 250, 100
+  offset: 0, 0
+  index: -1
+exit3
+  rotate: false
+  xy: 506, 2
+  size: 250, 100
+  orig: 250, 100
+  offset: 0, 0
+  index: -1

@@ -1,7 +1,6 @@
 package game.xonix.controller.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -16,13 +15,15 @@ import game.xonix.controller.Controller;
 import game.xonix.controller.GameControllerManager;
 import game.xonix.controller.enemy.EnemyController;
 import game.xonix.model.Enemy;
-import game.xonix.model.PlayButton;
+import game.xonix.view.PlayButton;
+import game.xonix.view.Button;
 import game.xonix.model.PlayerSingleton;
 import game.xonix.model.Wall;
 import game.xonix.view.Background;
 import game.xonix.view.DrawUI;
 import game.xonix.view.DrawWall;
 import game.xonix.view.Fonts.GameOverFont;
+
 
 /**
  * Created by Sonad on 17.10.17.
@@ -38,7 +39,7 @@ public class ChangeLvlController extends Controller {
     private LinkedList<Wall> playerWall;
     protected Stage stage;
     private Viewport viewport;
-    private PlayButton playButton;
+    private Button playButton;
     private boolean rendered = false;
     private int percent;
 
@@ -57,7 +58,7 @@ public class ChangeLvlController extends Controller {
         viewport.apply();
         playButton = new PlayButton();
         playButton.setPosition((Xonix.WIDTH/2), Xonix.HEIGHT/2-300);
-        playButton.getPlayButton().addListener(new ClickListener() {
+        playButton.getButton().addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 stage.dispose();
@@ -82,7 +83,7 @@ public class ChangeLvlController extends Controller {
         if (!rendered) {
             stage = new Stage(viewport, sb);
             Gdx.input.setInputProcessor(stage);
-            stage.addActor(playButton.getPlayButton());
+            stage.addActor(playButton.getButton());
             rendered = true;
         }
         sb.begin();

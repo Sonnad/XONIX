@@ -13,7 +13,10 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import game.xonix.Xonix;
 import game.xonix.controller.Controller;
 import game.xonix.controller.GameControllerManager;
-import game.xonix.model.PlayButton;
+import game.xonix.view.ExitButton;
+import game.xonix.view.LeadersButton;
+import game.xonix.view.PlayButton;
+import game.xonix.view.Button;
 
 /**
  * Created by Sonad on 18.09.17.
@@ -22,7 +25,7 @@ import game.xonix.model.PlayButton;
 public class MenuController extends Controller {
 
     private Texture background;
-    private PlayButton playButton;
+    private Button playButton, leadersButton, exitButton;
     protected Stage stage;
     boolean rendered = false;
     private Viewport viewport;
@@ -35,11 +38,21 @@ public class MenuController extends Controller {
         viewport.apply();
         background = new Texture("bg.jpg");
         playButton = new PlayButton();
-        playButton.getPlayButton().addListener(new ClickListener() {
+        leadersButton = new LeadersButton();
+        exitButton = new ExitButton();
+        playButton.getButton().addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 stage.dispose();
                 gsm.set(new PlayController(gsm));
+            }
+        });
+        exitButton.getButton().addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                stage.dispose();
+                dispose();
+                Gdx.app.exit();
             }
         });
 
@@ -60,7 +73,9 @@ public class MenuController extends Controller {
         if (!rendered) {
             stage = new Stage(viewport, sb);
             Gdx.input.setInputProcessor(stage);
-            stage.addActor(playButton.getPlayButton());
+            stage.addActor(playButton.getButton());
+            stage.addActor(exitButton.getButton());
+            stage.addActor(leadersButton.getButton());
             rendered = true;
         }
 
